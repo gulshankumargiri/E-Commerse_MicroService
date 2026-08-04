@@ -1,0 +1,73 @@
+package com.inventory.service;
+
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.inventory.entity.inventoryEntity;
+import com.inventory.repository.InventoryRepository;
+import com.inventory.requests.InventoryRequest;
+import com.inventory.response.InventoryResponse;
+
+@Service
+public class InventoryService {
+
+	@Autowired
+	InventoryRepository repository;
+
+	public InventoryResponse create(InventoryRequest request) {
+
+		if (request != null) {
+
+			inventoryEntity entity = new inventoryEntity();
+			entity.setAvailableQuantity(request.getAvailableQuantity());
+			entity.setInStock(request.getInStock());
+			entity.setProductId(request.getProductId());
+			entity.setReorderLevel(request.getReorderLevel());
+			entity.setWarehouseLocation(request.getWarehouseLocation());
+			entity.setReservedQuantity(request.getReservedQuantity());
+
+			inventoryEntity resEnt = repository.save(entity);
+			InventoryResponse res = new InventoryResponse();
+
+			res.setAvailableQuantity(resEnt.getAvailableQuantity());
+			res.setInStock(resEnt.getInStock());
+			res.setProductId(resEnt.getProductId());
+			res.setReorderLevel(resEnt.getReorderLevel());
+			res.setWarehouseLocation(resEnt.getWarehouseLocation());
+			res.setReservedQuantity(resEnt.getReservedQuantity());
+			res.setInventoryId(resEnt.getInventoryId());
+
+			System.out.println("Product inventory Added successfully");
+			return res;
+
+		}
+
+		return null;
+	}
+
+	public InventoryResponse getInventory(Long productId) {
+
+		inventoryEntity resEnt = repository.findByProductId(productId);
+
+		InventoryResponse res = new InventoryResponse();
+
+		res.setAvailableQuantity(resEnt.getAvailableQuantity());
+		res.setInStock(resEnt.getInStock());
+		res.setProductId(resEnt.getProductId());
+		res.setReorderLevel(resEnt.getReorderLevel());
+		res.setWarehouseLocation(resEnt.getWarehouseLocation());
+		res.setReservedQuantity(resEnt.getReservedQuantity());
+		res.setInventoryId(resEnt.getInventoryId());
+
+		return res;
+	}
+
+	public InventoryResponse reduceStockInInventory(Long productId, Integer quantity) {
+
+		inventoryEntity resEnt = repository.findByProductId(productId);
+
+		return null;
+	}
+}

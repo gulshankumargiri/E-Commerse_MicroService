@@ -1,0 +1,39 @@
+package com.inventory.service;
+
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.inventory.entity.inventoryEntity;
+import com.inventory.repository.InventoryRepository;
+import com.inventory.requests.InventoryRequest;
+import com.inventory.response.InventoryResponse;
+
+@Service
+public class InventoryService {
+
+	@Autowired
+	InventoryRepository repository;
+
+	public InventoryResponse create(InventoryRequest request) {
+
+		if (request != null) {
+
+		}
+
+		return null;
+	}
+
+	public InventoryResponse getInventory(Long id) {
+
+		inventoryEntity ent = repository.findById(id).get();
+
+		InventoryResponse res = new InventoryResponse();
+		
+		res.setProductId(ent.getProductId());
+		res.setReservedQuantity(ent.getReservedQuantity());
+		
+		return res;
+	}
+}

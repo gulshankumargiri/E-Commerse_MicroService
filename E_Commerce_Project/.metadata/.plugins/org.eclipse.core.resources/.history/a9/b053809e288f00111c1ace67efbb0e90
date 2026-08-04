@@ -1,0 +1,35 @@
+package com.orders.entity;
+
+public class InventoryDto {
+
+	private Long inventoryId;
+
+	private Long productId;
+
+	private Integer availableQuantity;
+
+	private Integer reservedQuantity;
+
+	private Integer reorderLevel;
+
+	private String warehouseLocation;
+
+	private Boolean inStock;
+
+	public Long getProductId() {
+		return productId;
+	}
+
+	public void setProductId(Long productId) {
+		this.productId = productId;
+	}
+
+	public Integer getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
+	}
+
+}

@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: API_GATEWAY
+
+  cloud:
+    gateway:
+      server:
+        webmvc:
+          routes:
+            - id: product-service
+              uri: lb://PRODUCT_SERVICE
+              predicates:
+                - Path=/products/**
+
+            - id: inventory-service
+              uri: lb://INVENTORY_SERVICE
+              predicates:
+                - Path=/inventory/**
+
+            - id: order-service
+              uri: lb://ORDER_SERVICE
+              predicates:
+                - Path=/orders/**
+
+            - id: checkout-service
+              uri: lb://CHECKOUT_SERVICE
+              predicates:
+                - Path=/checkout/**
+
+server:
+  port: 8080
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka

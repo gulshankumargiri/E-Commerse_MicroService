@@ -1,0 +1,33 @@
+package com.orders.controller;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.orders.entity.InventoryDto;
+import com.orders.inventory.InventoryClient;
+
+@RestController
+@RequestMapping("/orders")
+public class OrderController {
+
+	private final InventoryClient inventoryClient;
+
+	public OrderController(InventoryClient inventoryClient) {
+		this.inventoryClient = inventoryClient;
+	}
+
+	@GetMapping("/test")
+	public String test() {
+		return "Working";
+	}
+
+	@GetMapping("/{productId}")
+	public InventoryDto getInventory(@PathVariable Long productId) {
+		return inventoryClient.getInventory(productId);
+	}
+
+	
+
+}

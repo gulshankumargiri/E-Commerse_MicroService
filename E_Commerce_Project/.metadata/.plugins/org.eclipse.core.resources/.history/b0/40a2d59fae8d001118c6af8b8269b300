@@ -1,0 +1,29 @@
+package com.inventory.controller;
+
+import java.util.List;
+import java.util.Optional;
+
+import com.inventory.Repository.InventoryRepository;
+import com.inventory.entity.inventoryProductEntity;
+
+@RestController
+@RequestMapping("inventoryProducts")
+public class InventoryController {
+
+	@Autowired
+	InventoryRepository inventoryRepository;
+
+//	@PostMapping("/create")
+//	public inventoryProductEntity createData(@RequestBody inventoryProductEntity entity) {
+//
+//		return inventoryRepository.save(entity);
+//	}
+
+	@GetMapping("/get")
+	public String getAllData() {
+
+		Optional<inventoryProductEntity> s = inventoryRepository.findById("6a6de5500cd2a568931fe3e3");
+		String s1 = s.get().getName();
+		return s1;
+	}
+}

@@ -1,0 +1,46 @@
+package com.orders.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.orders.Service.OrderService;
+import com.orders.inventory.InventoryClient;
+import com.orders.requestDTO.InventoryDto;
+import com.orders.requestDTO.OrderRequest;
+import com.orders.response.OrderResponse;
+
+@RestController
+@RequestMapping("/orders")
+public class OrderController {
+
+	private final InventoryClient inventoryClient;
+	@Autowired
+	OrderService orderService;
+
+	public OrderController(InventoryClient inventoryClient) {
+		this.inventoryClient = inventoryClient;
+	}
+
+	@GetMapping("/test")
+	public String test() {
+		return "Working";
+	}
+
+	@GetMapping("inventory/{productId}")
+	public InventoryDto getInventory(@PathVariable Long productId) {
+		return inventoryClient.getInventory(productId);
+	}
+
+	@PostMapping("/placeOrder")
+	public OrderResponse placeOrder(@RequestBody OrderRequest request) {
+
+		return orderService.placeOrder(request);
+	}
+
+}

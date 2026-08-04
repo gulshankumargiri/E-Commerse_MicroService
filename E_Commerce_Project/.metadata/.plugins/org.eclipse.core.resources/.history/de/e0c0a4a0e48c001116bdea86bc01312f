@@ -1,0 +1,6 @@
+spring.application.name=Inventory_Service
+
+server.port=9091
+
+spring.data.mongodb.uri=mongodb+srv://gkv1k2s4_db_user:0KNxOZFOkG3L4DaV@amazonspringbootproject.ot6xheh.mongodb.net/?appName=AmazonSpringbootProject
+spring.data.mongodb.database=inventorydb

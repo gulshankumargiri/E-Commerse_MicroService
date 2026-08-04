@@ -1,0 +1,9 @@
+package com.inventory.entity;
+
+public class inventoryProductEntity {
+
+	private Long id;
+	private String name;
+	
+	
+}

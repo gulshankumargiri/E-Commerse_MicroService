@@ -1,0 +1,5 @@
+spring.application.name=Inventory_Service
+
+server.port=5052
+
+ 

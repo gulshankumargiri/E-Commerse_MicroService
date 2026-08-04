@@ -1,0 +1,8 @@
+package com.inventory.Repository;
+
+import org.springframework.data.mongodb.repository.MongoRepository;
+import com.inventory.entity.inventoryProductEntity;
+
+public interface InventoryRepository extends MongoRepository<inventoryProductEntity, Long> {
+
+}

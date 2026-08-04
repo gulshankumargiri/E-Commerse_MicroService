@@ -1,0 +1,37 @@
+package com.inventory.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.inventory.requests.InventoryRequest;
+import com.inventory.response.InventoryResponse;
+import com.inventory.service.InventoryService;
+
+@RestController
+@RequestMapping("/inventory")
+public class InventoryController {
+
+	@Autowired
+	InventoryService service;
+
+	@PostMapping("/create")
+	public InventoryResponse createData(@RequestBody InventoryRequest request) {
+
+		return service.create(request);
+
+	}
+
+	@GetMapping("/{productId}")
+	public InventoryResponse getInventoryById(@PathVariable Long productId) {
+
+		InventoryResponse res = service.getInventory(productId);
+
+		return res;
+	}
+
+}

@@ -1,0 +1,12 @@
+package com.inventory.entity;
+
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection = "inventoryService")
+public class inventoryProductEntity {
+
+	private String id;
+	private String name;
+	
+	
+}

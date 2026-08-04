@@ -1,0 +1,7 @@
+package com.orders.entity;
+
+public class InventoryDto {
+
+	private Long productId;
+	private Integer quantity;
+}

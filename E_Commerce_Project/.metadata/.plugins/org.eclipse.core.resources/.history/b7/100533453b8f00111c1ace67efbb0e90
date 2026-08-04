@@ -1,0 +1,44 @@
+package com.orders.Service;
+
+import org.springframework.stereotype.Service;
+
+import com.orders.entity.OrderEntity;
+import com.orders.entity.OrderItemEntity;
+import com.orders.inventory.InventoryClient;
+import com.orders.requestDTO.InventoryDto;
+import com.orders.requestDTO.OrderRequest;
+import com.orders.response.OrderResponse;
+
+@Service
+public class OrderService {
+	private final InventoryClient client;
+	
+	public OrderService(InventoryClient inventoryClient){
+		this.client = inventoryClient;
+	}
+
+	public OrderResponse placeOrder(OrderRequest request) {
+		
+		
+		InventoryDto dto  = client.getInventory(request.getProductId());
+
+		if(dto == null) {
+			throw new RuntimeException("Bad Request! Rejecting Order.");
+		}
+		else {
+			
+			OrderItemEntity entity = new OrderItemEntity(); 
+			
+			OrderEntity entity2 = new OrderEntity();
+			
+			
+			
+		}
+		
+		
+		
+		return null;
+	}
+
+	
+}

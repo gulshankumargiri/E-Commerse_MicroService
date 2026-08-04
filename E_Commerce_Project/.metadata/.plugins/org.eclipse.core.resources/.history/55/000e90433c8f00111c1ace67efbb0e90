@@ -1,0 +1,59 @@
+package com.inventory.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.inventory.entity.ProductEntity;
+import com.inventory.repository.ProductRepository;
+import com.inventory.requests.ProductRequest;
+import com.inventory.response.ProductResponse;
+
+@Service
+public class ProductService {
+
+	@Autowired
+	ProductRepository repository;
+
+	public ProductResponse createProd(ProductRequest request) {
+
+		ProductEntity ent = new ProductEntity();
+
+		ent.setBrand(request.getBrand());
+		ent.setCategory(request.getCategory());
+		ent.setDescription(request.getDescription());
+		ent.setPrice(request.getPrice());
+		ent.setProductName(request.getProductName());
+		ent.setSku(request.getSku());
+
+		ProductEntity respEnt = repository.save(ent);
+
+		ProductResponse res = new ProductResponse();
+		res.setBrand(respEnt.getBrand());
+		res.setCategory(respEnt.getCategory());
+		res.setDescription(respEnt.getDescription());
+		res.setPrice(respEnt.getPrice());
+		res.setProductName(respEnt.getProductName());
+		res.setSku(respEnt.getSku());
+		res.setProductId(respEnt.getProductId());
+
+		System.out.println("Product added");
+		return res;
+	}
+
+	public ProductResponse getProductById(Long id) {
+
+		ProductEntity respEnt = repository.findById(id).get();
+
+		ProductResponse res = new ProductResponse();
+		res.setBrand(respEnt.getBrand());
+		res.setCategory(respEnt.getCategory());
+		res.setDescription(respEnt.getDescription());
+		res.setPrice(respEnt.getPrice());
+		res.setProductName(respEnt.getProductName());
+		res.setSku(respEnt.getSku());
+		res.setProductId(respEnt.getProductId());
+
+		return res;
+
+	}
+}

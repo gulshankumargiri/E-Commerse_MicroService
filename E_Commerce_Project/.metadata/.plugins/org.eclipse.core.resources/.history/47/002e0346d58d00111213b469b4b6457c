@@ -1,0 +1,5 @@
+package com.inventory.requests;
+
+public class ProductRequest {
+
+}

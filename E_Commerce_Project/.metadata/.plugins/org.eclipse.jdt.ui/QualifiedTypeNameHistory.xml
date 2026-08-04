@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="com.mongodb.client.MongoCluster"/>
+    <fullyQualifiedTypeName name="com.mongodb.client.MongoDatabase"/>
+    <fullyQualifiedTypeName name="org.springframework.data.mongodb.repository.MongoRepository"/>
+    <fullyQualifiedTypeName name="com.inventory.Repository.InventoryRepository"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestBody"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.PostMapping"/>
+    <fullyQualifiedTypeName name="org.springframework.data.mongodb.core.mapping.Document"/>
+    <fullyQualifiedTypeName name="java.util.Optional"/>
+    <fullyQualifiedTypeName name="com.inventory.entity.inventoryProductEntity"/>
+    <fullyQualifiedTypeName name="com.inventory.repository.InventoryRepository"/>
+    <fullyQualifiedTypeName name="com.inventory.requests.InventoryRequest"/>
+    <fullyQualifiedTypeName name="com.inventory.service.InventoryService"/>
+    <fullyQualifiedTypeName name="com.inventory.repository.ProductRepository"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RestController"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestMapping"/>
+    <fullyQualifiedTypeName name="com.inventory.service.ProductService"/>
+    <fullyQualifiedTypeName name="com.inventory.requests.ProductRequest"/>
+    <fullyQualifiedTypeName name="org.springframework.data.annotation.Id"/>
+    <fullyQualifiedTypeName name="org.springframework.data.jpa.repository.JpaRepository"/>
+    <fullyQualifiedTypeName name="com.checkout.entity.PaymentEntity"/>
+    <fullyQualifiedTypeName name="com.checkout.entity.InvoiceEntity"/>
+    <fullyQualifiedTypeName name="com.checkout.repository.PaymentRepository"/>
+    <fullyQualifiedTypeName name="com.checkout.response.PaymentResponse"/>
+    <fullyQualifiedTypeName name="com.checkout.request.PaymentRequest"/>
+    <fullyQualifiedTypeName name="org.springframework.stereotype.Service"/>
+    <fullyQualifiedTypeName name="com.checkout.repository.InvoiceRepository"/>
+    <fullyQualifiedTypeName name="com.checkout.response.InvoiceResponse"/>
+    <fullyQualifiedTypeName name="com.checkout.request.InvoiceRequest"/>
+    <fullyQualifiedTypeName name="org.springframework.cloud.netflix.eureka.server.EnableEurekaServer"/>
+    <fullyQualifiedTypeName name="jakarta.persistence.Entity"/>
+    <fullyQualifiedTypeName name="jakarta.persistence.Table"/>
+    <fullyQualifiedTypeName name="jakarta.persistence.GeneratedValue"/>
+    <fullyQualifiedTypeName name="jakarta.persistence.GenerationType"/>
+    <fullyQualifiedTypeName name="jakarta.persistence.Id"/>
+    <fullyQualifiedTypeName name="com.inventory.entity.inventoryEntity"/>
+    <fullyQualifiedTypeName name="com.inventory.response.InventoryResponse"/>
+    <fullyQualifiedTypeName name="com.inventory.entity.ProductEntity"/>
+    <fullyQualifiedTypeName name="com.inventory.response.ProductResponse"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.PathVariable"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.GetMapping"/>
+    <fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
+    <fullyQualifiedTypeName name="com.orders.inventory.InventoryClient"/>
+</qualifiedTypeNameHistroy>

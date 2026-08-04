@@ -1,0 +1,20 @@
+package com.inventory.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.inventory.repository.ProductRepository;
+import com.inventory.requests.ProductRequest;
+import com.inventory.response.ProductResponse;
+
+@Service
+public class ProductService {
+
+	@Autowired
+	ProductRepository repository;
+
+	public ProductResponse createProd(ProductRequest request) {
+
+		return null;
+	}
+}

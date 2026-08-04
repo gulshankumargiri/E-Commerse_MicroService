@@ -1,0 +1,13 @@
+package com.orders.inventory;
+
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
+@FeignClient(name = "INVENTORY_SERVICE")
+public interface InventoryClient {
+
+    @GetMapping("/inventory/{productId}")
+    InventoryDto getInventory(@PathVariable Long productId);
+
+}
