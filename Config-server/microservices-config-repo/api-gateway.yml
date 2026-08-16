@@ -1,0 +1,374 @@
+# =========================================================
+# APPLICATION
+# =========================================================
+
+spring:
+  application:
+    name: api-gateway
+
+  # =======================================================
+  # REDIS
+  # =======================================================
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+  # =======================================================
+  # CLOUD GATEWAY
+  # =======================================================
+
+  cloud:
+
+    gateway:
+
+      # ---------------------------------------------------
+      # Eureka Service Discovery
+      # ---------------------------------------------------
+
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+
+      # ---------------------------------------------------
+      # ROUTES
+      # ---------------------------------------------------
+
+      routes:
+
+        # =================================================
+        # PRODUCT SERVICE
+        # =================================================
+
+        - id: product-service
+
+          uri: lb://product-service
+
+          predicates:
+            - Path=/api/products/**
+
+          filters:
+
+            - name: RequestRateLimiter
+              args:
+                key-resolver: "#{@ipKeyResolver}"
+                redis-rate-limiter.replenishRate: 10
+                redis-rate-limiter.burstCapacity: 20
+
+            - name: CircuitBreaker
+              args:
+                name: productServiceCircuitBreaker
+                fallbackUri: forward:/fallback/product
+
+
+        # =================================================
+        # ORDER SERVICE
+        # =================================================
+
+        - id: order-service
+
+          uri: lb://order-service
+
+          predicates:
+            - Path=/api/orders/**
+
+          filters:
+
+            - name: RequestRateLimiter
+              args:
+                key-resolver: "#{@ipKeyResolver}"
+                redis-rate-limiter.replenishRate: 10
+                redis-rate-limiter.burstCapacity: 20
+
+            - name: CircuitBreaker
+              args:
+                name: orderServiceCircuitBreaker
+                fallbackUri: forward:/fallback/order
+
+
+        # =================================================
+        # INVENTORY SERVICE
+        # =================================================
+
+        - id: inventory-service
+
+          uri: lb://inventory-service
+
+          predicates:
+            - Path=/api/inventory/**
+
+          filters:
+
+            - name: RequestRateLimiter
+              args:
+                key-resolver: "#{@ipKeyResolver}"
+                redis-rate-limiter.replenishRate: 10
+                redis-rate-limiter.burstCapacity: 20
+
+            - name: CircuitBreaker
+              args:
+                name: inventoryServiceCircuitBreaker
+                fallbackUri: forward:/fallback/inventory
+
+
+        # =================================================
+        # PAYMENT SERVICE
+        # =================================================
+
+        - id: payment-service
+
+          uri: lb://payment-service
+
+          predicates:
+            - Path=/api/payments/**
+
+          filters:
+
+            - name: RequestRateLimiter
+              args:
+                key-resolver: "#{@ipKeyResolver}"
+                redis-rate-limiter.replenishRate: 5
+                redis-rate-limiter.burstCapacity: 10
+
+            - name: CircuitBreaker
+              args:
+                name: paymentServiceCircuitBreaker
+                fallbackUri: forward:/fallback/payment
+
+
+        # =================================================
+        # DELIVERY SERVICE
+        # =================================================
+
+        - id: delivery-service
+
+          uri: lb://delivery-service
+
+          predicates:
+            - Path=/api/delivery/**
+
+          filters:
+
+            - name: RequestRateLimiter
+              args:
+                key-resolver: "#{@ipKeyResolver}"
+                redis-rate-limiter.replenishRate: 10
+                redis-rate-limiter.burstCapacity: 20
+
+            - name: CircuitBreaker
+              args:
+                name: deliveryServiceCircuitBreaker
+                fallbackUri: forward:/fallback/delivery
+
+
+        # =================================================
+        # PICKUP SERVICE
+        # =================================================
+
+        - id: pickup-service
+
+          uri: lb://pickup-service
+
+          predicates:
+            - Path=/api/pickup/**
+
+          filters:
+
+            - name: RequestRateLimiter
+              args:
+                key-resolver: "#{@ipKeyResolver}"
+                redis-rate-limiter.replenishRate: 10
+                redis-rate-limiter.burstCapacity: 20
+
+            - name: CircuitBreaker
+              args:
+                name: pickupServiceCircuitBreaker
+                fallbackUri: forward:/fallback/pickup
+
+
+        # =================================================
+        # NOTIFICATION SERVICE
+        # =================================================
+
+        - id: notification-service
+
+          uri: lb://notification-service
+
+          predicates:
+            - Path=/api/notifications/**
+
+          filters:
+
+            - name: RequestRateLimiter
+              args:
+                key-resolver: "#{@ipKeyResolver}"
+                redis-rate-limiter.replenishRate: 10
+                redis-rate-limiter.burstCapacity: 20
+
+            - name: CircuitBreaker
+              args:
+                name: notificationServiceCircuitBreaker
+                fallbackUri: forward:/fallback/notification
+
+
+# =========================================================
+# SERVER
+# =========================================================
+
+server:
+  port: 8091
+
+
+# =========================================================
+# EUREKA
+# =========================================================
+
+eureka:
+
+  client:
+
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+    register-with-eureka: true
+    fetch-registry: true
+
+  instance:
+    prefer-ip-address: true
+
+
+# =========================================================
+# RESILIENCE4J CIRCUIT BREAKER
+# =========================================================
+
+resilience4j:
+
+  circuitbreaker:
+
+    instances:
+
+      productServiceCircuitBreaker:
+        sliding-window-type: COUNT_BASED
+        sliding-window-size: 10
+        minimum-number-of-calls: 5
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 10s
+        permitted-number-of-calls-in-half-open-state: 3
+        automatic-transition-from-open-to-half-open-enabled: true
+
+      orderServiceCircuitBreaker:
+        sliding-window-type: COUNT_BASED
+        sliding-window-size: 10
+        minimum-number-of-calls: 5
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 10s
+        permitted-number-of-calls-in-half-open-state: 3
+        automatic-transition-from-open-to-half-open-enabled: true
+
+      inventoryServiceCircuitBreaker:
+        sliding-window-type: COUNT_BASED
+        sliding-window-size: 10
+        minimum-number-of-calls: 5
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 10s
+        permitted-number-of-calls-in-half-open-state: 3
+        automatic-transition-from-open-to-half-open-enabled: true
+
+      paymentServiceCircuitBreaker:
+        sliding-window-type: COUNT_BASED
+        sliding-window-size: 10
+        minimum-number-of-calls: 5
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 10s
+        permitted-number-of-calls-in-half-open-state: 3
+        automatic-transition-from-open-to-half-open-enabled: true
+
+      deliveryServiceCircuitBreaker:
+        sliding-window-type: COUNT_BASED
+        sliding-window-size: 10
+        minimum-number-of-calls: 5
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 10s
+        permitted-number-of-calls-in-half-open-state: 3
+        automatic-transition-from-open-to-half-open-enabled: true
+
+      pickupServiceCircuitBreaker:
+        sliding-window-type: COUNT_BASED
+        sliding-window-size: 10
+        minimum-number-of-calls: 5
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 10s
+        permitted-number-of-calls-in-half-open-state: 3
+        automatic-transition-from-open-to-half-open-enabled: true
+
+      notificationServiceCircuitBreaker:
+        sliding-window-type: COUNT_BASED
+        sliding-window-size: 10
+        minimum-number-of-calls: 5
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 10s
+        permitted-number-of-calls-in-half-open-state: 3
+        automatic-transition-from-open-to-half-open-enabled: true
+
+
+  # =======================================================
+  # TIME LIMITER
+  # =======================================================
+
+  timelimiter:
+
+    instances:
+
+      productServiceCircuitBreaker:
+        timeout-duration: 3s
+
+      orderServiceCircuitBreaker:
+        timeout-duration: 3s
+
+      inventoryServiceCircuitBreaker:
+        timeout-duration: 3s
+
+      paymentServiceCircuitBreaker:
+        timeout-duration: 3s
+
+      deliveryServiceCircuitBreaker:
+        timeout-duration: 3s
+
+      pickupServiceCircuitBreaker:
+        timeout-duration: 3s
+
+      notificationServiceCircuitBreaker:
+        timeout-duration: 3s
+
+
+# =========================================================
+# ACTUATOR
+# =========================================================
+
+management:
+
+  endpoints:
+    web:
+      exposure:
+        include:
+          - health
+          - info
+          - metrics
+          - prometheus
+
+  endpoint:
+    health:
+      show-details: always
+
+
+# =========================================================
+# LOGGING
+# =========================================================
+
+logging:
+
+  level:
+    org.springframework.cloud.gateway: INFO
+    reactor.netty: INFO
