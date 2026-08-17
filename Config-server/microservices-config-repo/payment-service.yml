@@ -4,7 +4,7 @@ server:
 spring:
 
   datasource:
-    url: jdbc:mysql://localhost:3306/payment_db
+    url: jdbc:mysql://localhost:3306/01Panasonic_Electronics
     username: root
     password: TIGER
 
