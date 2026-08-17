@@ -24,13 +24,6 @@ spring:
       hibernate:
         format_sql: true
 
-  # =========================
-  # MongoDB
-  # =========================
-  data:
-    mongodb:
-      uri: mongodb://localhost:27017/product_db
-
 
 # =========================
 # Eureka
