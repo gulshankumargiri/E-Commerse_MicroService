@@ -1,3 +1,4 @@
+
 # =========================================================
 # APPLICATION
 # =========================================================
@@ -5,6 +6,12 @@
 spring:
   application:
     name: api-gateway
+
+  profiles:
+    active: dev
+
+  config:
+    import: configserver:http://localhost:8888
 
   # =======================================================
   # REDIS
@@ -20,9 +27,7 @@ spring:
   # =======================================================
 
   cloud:
-
     gateway:
-
       # ---------------------------------------------------
       # Eureka Service Discovery
       # ---------------------------------------------------
@@ -38,19 +43,12 @@ spring:
 
       routes:
 
-        # =================================================
         # PRODUCT SERVICE
-        # =================================================
-
         - id: product-service
-
           uri: lb://product-service
-
           predicates:
             - Path=/api/products/**
-
           filters:
-
             - name: RequestRateLimiter
               args:
                 key-resolver: "#{@ipKeyResolver}"
@@ -62,20 +60,12 @@ spring:
                 name: productServiceCircuitBreaker
                 fallbackUri: forward:/fallback/product
 
-
-        # =================================================
         # ORDER SERVICE
-        # =================================================
-
         - id: order-service
-
           uri: lb://order-service
-
           predicates:
             - Path=/api/orders/**
-
           filters:
-
             - name: RequestRateLimiter
               args:
                 key-resolver: "#{@ipKeyResolver}"
@@ -87,20 +77,12 @@ spring:
                 name: orderServiceCircuitBreaker
                 fallbackUri: forward:/fallback/order
 
-
-        # =================================================
         # INVENTORY SERVICE
-        # =================================================
-
         - id: inventory-service
-
           uri: lb://inventory-service
-
           predicates:
             - Path=/api/inventory/**
-
           filters:
-
             - name: RequestRateLimiter
               args:
                 key-resolver: "#{@ipKeyResolver}"
@@ -112,20 +94,12 @@ spring:
                 name: inventoryServiceCircuitBreaker
                 fallbackUri: forward:/fallback/inventory
 
-
-        # =================================================
         # PAYMENT SERVICE
-        # =================================================
-
         - id: payment-service
-
           uri: lb://payment-service
-
           predicates:
             - Path=/api/payments/**
-
           filters:
-
             - name: RequestRateLimiter
               args:
                 key-resolver: "#{@ipKeyResolver}"
@@ -137,20 +111,12 @@ spring:
                 name: paymentServiceCircuitBreaker
                 fallbackUri: forward:/fallback/payment
 
-
-        # =================================================
         # DELIVERY SERVICE
-        # =================================================
-
         - id: delivery-service
-
           uri: lb://delivery-service
-
           predicates:
             - Path=/api/delivery/**
-
           filters:
-
             - name: RequestRateLimiter
               args:
                 key-resolver: "#{@ipKeyResolver}"
@@ -162,20 +128,12 @@ spring:
                 name: deliveryServiceCircuitBreaker
                 fallbackUri: forward:/fallback/delivery
 
-
-        # =================================================
         # PICKUP SERVICE
-        # =================================================
-
         - id: pickup-service
-
           uri: lb://pickup-service
-
           predicates:
             - Path=/api/pickup/**
-
           filters:
-
             - name: RequestRateLimiter
               args:
                 key-resolver: "#{@ipKeyResolver}"
@@ -187,20 +145,12 @@ spring:
                 name: pickupServiceCircuitBreaker
                 fallbackUri: forward:/fallback/pickup
 
-
-        # =================================================
         # NOTIFICATION SERVICE
-        # =================================================
-
         - id: notification-service
-
           uri: lb://notification-service
-
           predicates:
             - Path=/api/notifications/**
-
           filters:
-
             - name: RequestRateLimiter
               args:
                 key-resolver: "#{@ipKeyResolver}"
@@ -211,6 +161,16 @@ spring:
               args:
                 name: notificationServiceCircuitBreaker
                 fallbackUri: forward:/fallback/notification
+
+  # =======================================================
+  # JWT AUTHENTICATION
+  # =======================================================
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8014
 
 
 # =========================================================
@@ -226,12 +186,9 @@ server:
 # =========================================================
 
 eureka:
-
   client:
-
     service-url:
       defaultZone: http://localhost:8761/eureka
-
     register-with-eureka: true
     fetch-registry: true
 
@@ -244,9 +201,7 @@ eureka:
 # =========================================================
 
 resilience4j:
-
   circuitbreaker:
-
     instances:
 
       productServiceCircuitBreaker:
@@ -312,13 +267,11 @@ resilience4j:
         permitted-number-of-calls-in-half-open-state: 3
         automatic-transition-from-open-to-half-open-enabled: true
 
-
   # =======================================================
   # TIME LIMITER
   # =======================================================
 
   timelimiter:
-
     instances:
 
       productServiceCircuitBreaker:
@@ -348,7 +301,6 @@ resilience4j:
 # =========================================================
 
 management:
-
   endpoints:
     web:
       exposure:
@@ -368,18 +320,6 @@ management:
 # =========================================================
 
 logging:
-
   level:
     org.springframework.cloud.gateway: INFO
     reactor.netty: INFO
-
-# =========================================================
-# Security - jwt authentications
-# =========================================================
-
-spring:
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: http://localhost:8014
