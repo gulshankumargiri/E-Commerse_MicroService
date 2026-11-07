@@ -372,3 +372,14 @@ logging:
   level:
     org.springframework.cloud.gateway: INFO
     reactor.netty: INFO
+
+# =========================================================
+# Security - jwt authentications
+# =========================================================
+
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8014
